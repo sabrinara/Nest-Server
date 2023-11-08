@@ -34,17 +34,26 @@ async function run() {
       const services = await cursor.toArray();
       res.send(services);
     });
-// Get Single service
-app.get("/services/:id", async (req, res) => {
-  const id = req.params.id;
-  const query = { _id: new ObjectId(id) };
-  const service = await servicesCollection.findOne(query);
-  res.send(service);
-});
+    // Get Single service
+    app.get("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const service = await servicesCollection.findOne(query);
+      res.send(service);
+    });
 
 
+    // Post a service
+    app.post("/services", async (req, res) => {
+      const service = req.body;
+      console.log("hit the post api", service);
+      const result = await servicesCollection.insertOne(service);
+      res.send(result);
+    });
 
-    
+ 
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
