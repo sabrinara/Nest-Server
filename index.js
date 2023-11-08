@@ -76,6 +76,14 @@ async function run() {
       res.send(result);
     })
 
+    // get booking
+    app.get("/bookings", async (req, res) => {
+      const cursor = bookingsCollection.find({});
+      const bookings = await cursor.toArray();
+      res.send(bookings);
+    })
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
