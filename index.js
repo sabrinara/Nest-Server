@@ -35,63 +35,7 @@ async function run() {
       res.send(services);
     });
 
-    // Get Single service
-    app.get("/services/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const service = await servicesCollection.findOne(query);
-      res.send(service);
-    });
-
-
-    // Post a service
-    app.post("/services", async (req, res) => {
-      const service = req.body;
-      console.log("hit the post api", service);
-      const result = await servicesCollection.insertOne(service);
-      res.send(result);
-    });
-
-    // Update a service
-    app.put("/services/:id", async (req, res) => {
-      const id = req.params.id;
-      const updatedservice = req.body;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedDoc = {
-        $set: updatedservice,
-      };
-      const result = await servicesCollection.updateOne(
-        filter,
-        updatedDoc,
-        options
-      );
-      res.send(result);
-    });
-
-
-    // add to booking
-    app.post("/bookings", async (req, res) => {
-      const booking = req.body;
-      const result = await bookingsCollection.insertOne(booking);
-      res.send(result);
-    })
-
-    // get booking
-    app.get("/bookings", async (req, res) => {
-      const cursor = bookingsCollection.find({});
-      const bookings = await cursor.toArray();
-      res.send(bookings);
-    })
-
-    // delete booking
-    app.delete("/bookings/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await bookingsCollection.deleteOne(query);
-      res.send(result);
-    })
-
+    
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
