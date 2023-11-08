@@ -51,7 +51,24 @@ async function run() {
       res.send(result);
     });
 
- 
+    // Update a service
+    app.put("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedservice = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: updatedservice,
+      };
+      const result = await servicesCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
+
+
 
 
     // Send a ping to confirm a successful connection
