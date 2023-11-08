@@ -69,6 +69,12 @@ async function run() {
     });
 
 
+    // add to booking
+    app.post("/bookings", async (req, res) => {
+      const booking = req.body;
+      const result = await bookingsCollection.insertOne(booking);
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
