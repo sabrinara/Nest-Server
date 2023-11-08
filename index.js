@@ -34,6 +34,15 @@ async function run() {
       const services = await cursor.toArray();
       res.send(services);
     });
+// Get Single service
+app.get("/services/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const service = await servicesCollection.findOne(query);
+  res.send(service);
+});
+
+
 
     
     // Send a ping to confirm a successful connection
