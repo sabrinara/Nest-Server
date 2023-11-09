@@ -67,8 +67,8 @@ async function run() {
       );
       res.send(result);
     });
-    
-// Delete a service
+
+    // Delete a service
     app.delete("/services/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -98,6 +98,21 @@ async function run() {
       res.send(result);
     })
 
+    //update booking
+    app.put("/bookings/:id", async (req, res) => {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      const query = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: status,
+        }
+      }
+      const result = await bookingsCollection.updateOne(query, updatedDoc);
+      res.send(result);
+
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
